@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${STAFFGUIDENC_DATABASE_HOST}:${STAFFGUIDENC_DATABASE_PORT}/${STAFFGUIDENC_DATABASE_NAME}
+    hikari:
+      schema: lottery
+    username: ${STAFFGUIDENC_DATABASE_USERNAME}
+    password: ${STAFFGUIDENC_DATABASE_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: update
