@@ -9,13 +9,13 @@ import com.mikejohn.lottery.dao.mapper.ParticipantDtoWinnerDtoMapper;
 import com.mikejohn.lottery.dao.mapper.WinnerMapper;
 import com.mikejohn.lottery.dao.repository.ParticipantRepository;
 import com.mikejohn.lottery.dao.repository.WinnerRepository;
+import com.mikejohn.lottery.service.random.api.RandomApiServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +26,7 @@ public class MainService {
     private final ParticipantMapper participantMapper;
     private final ParticipantDtoWinnerDtoMapper participantDtoWinnerDtoMapper;
     private final WinnerMapper winnerMapper;
+    private final RandomApiServiceImpl randomApiService;
     @Lazy
     private final MainService self;
 
@@ -49,9 +50,11 @@ public class MainService {
         if (participants.size()<2) {
             throw new RuntimeException(ERROR_START);
         }
-        int winNumber = new Random().nextInt(participants.size());
+//        int winNumber = new Random().nextInt(participants.size());
+        int winNumber = randomApiService.getRandom(0, participants.size()-1);
         WinnerDto winnerDto = participantDtoWinnerDtoMapper.toWinnerDTO(participants.get(winNumber));
-        winnerDto.setAmount(new Random().nextInt(1000));
+//        winnerDto.setAmount(new Random().nextInt(1000));
+        winnerDto.setAmount(randomApiService.getRandom(0, 1000));
         try {
             self.saveWinner(winnerMapper.toModel(winnerDto));
             self.clearParticipants();

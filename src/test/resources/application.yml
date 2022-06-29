@@ -4,18 +4,18 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${LOTTERY_DATABASE_HOST}:${LOTTERY_DATABASE_PORT}/${LOTTERY_DATABASE_NAME}
+    url: jdbc:postgresql://localhost:5432/lottery
     hikari:
       schema: lottery
-    username: ${LOTTERY_DATABASE_USERNAME}
-    password: ${LOTTERY_DATABASE_PASSWORD}
+    username: postgres
+    password: postgres
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: false
-    show-sql: false
+    generate-ddl: true
+    show-sql: true
     hibernate:
       ddl-auto: update
 application:
